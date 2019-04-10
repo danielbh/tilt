@@ -28,11 +28,14 @@ proto: scripts/protocc/protocc.py
 # TODO(nick): We should have a release build that bakes in a particular
 # SYNCLET_IMAGE tag.
 install:
-	go install ./...
+	go install ./cmd/tilt/...
 
 install-dev:
 	@if ! [[ -e "$(SYNCLET_DEV_IMAGE_TAG_FILE)" ]]; then echo "No dev synclet found. Run make synclet-dev."; exit 1; fi
 	go install -ldflags "-X 'github.com/windmilleng/tilt/internal/synclet/sidecar.SyncletTag=$$(<$(SYNCLET_DEV_IMAGE_TAG_FILE))'" ./...
+
+install-sail:
+	go install ./cmd/sail/...
 
 define synclet-build-dev
 	echo $1 > $(SYNCLET_DEV_IMAGE_TAG_FILE)
