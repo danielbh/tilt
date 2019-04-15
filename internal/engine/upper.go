@@ -711,6 +711,7 @@ func checkForPodCrash(ctx context.Context, state *store.EngineState, ms *store.M
 	ms.CrashLog = podInfo.CurrentLog
 	ms.NeedsRebuildFromCrash = true
 	ms.ExpectedContainerID = ""
+	ms.PodSet = store.PodSet{}
 	msg := fmt.Sprintf("Detected a container change for %s. We could be running stale code. Rebuilding and deploying a new image.", ms.Name)
 	le := newLogEvent([]byte(msg + "\n"))
 	if len(ms.BuildHistory) > 0 {
